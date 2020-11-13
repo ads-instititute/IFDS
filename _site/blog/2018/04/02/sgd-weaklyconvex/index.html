@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Stochastic subgradient method converges at the rate \(O(k^{-1/4})\) on weakly convex functions &#8211; UW Institute on the Algorithmic Foundations of Data Science</title>
+    <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Recent breakthrough on using proximal stochastic gradient method for weakly convex functions.">
+    <meta name="robots" content="all">
+    <meta name="author" content="Sham Kakade">
+    
+    <meta name="keywords" content="blog">
+    <link rel="canonical" href="http://localhost:4000/blog/2018/04/02/sgd-weaklyconvex/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for UW Institute on the Algorithmic Foundations of Data Science" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?202011120026" type="text/css">
+
+    <!-- Fonts -->
+    
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+    
+
+    <!-- MathJax -->
+    
+    <script type="text/javascript" async
+        src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <!-- Verifications -->
+    
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Stochastic subgradient method converges at the rate \(O(k^{-1/4})\) on weakly convex functions">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="http://localhost:4000/blog/2018/04/02/sgd-weaklyconvex/">
+    <meta property="og:site_name" content="UW Institute on the Algorithmic Foundations of Data Science">
+    
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+    <meta name="twitter:title" content="Stochastic subgradient method converges at the rate \(O(k^{-1/4})\) on weakly convex functions" />
+    <meta name="twitter:description" content="Recent breakthrough on using proximal stochastic gradient method for weakly convex functions." />
+    <meta name="twitter:url" content="http://localhost:4000/blog/2018/04/02/sgd-weaklyconvex/" />
+    
+
+    <!-- Icons -->
+    <!-- <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"> -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#ffffff">
+
+    
+</head>
+
+<body class="site">
+  
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <div style="width:100%">
+      <a href="/"><img src="/images/ifds.png" style="width:30%;float:left;"></a>
+      <a href="https://nsf-tripods.org/"><img src="/images/NSF.gif" style="width:15%;margin-left:12.5%;float:left;"></a>
+      <a href="http://escience.washington.edu/"><img src="/images/eScience.png" style="width:30%;float:right;"></a>
+        <div style="clear: both;"></div>
+      </div>
+      
+      <nav class="site-nav">
+        
+
+
+
+    
+    
+    
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/about.html">About</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/index.html">News</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/publications.html">Publications</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/seminars.html">Seminars</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/courses.html">Courses</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/members.html">Members</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/blog.html">Blog</a>
+    
+
+    
+
+
+
+<div class="dropdown">
+  <button class="dropbtn">Workshops</button>
+  <div class="dropdown-content">
+    <a href="https://alecgt.github.io/adsi_summer/" style="margin-left:0em;"><font size=2px>ADSI Summer School</font></a>
+    <a href="https://ajwagen.github.io/adsi_learning_and_control/" style="margin-left:0em;"><font size=2px>ADSI Workshop</font></a>
+  </div>
+</div>
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+ 
+  
+  <a href="https://arxiv.org/abs/1802.02988" style="text-decoration: none" class="post-link">
+  
+    <img src="/images/stoch_subg_weak_conv.jpeg" style="width:30%;float:right;">
+  
+  </a>
+  
+ 
+  
+  
+  <h1>Stochastic subgradient method converges at the rate \(O(k^{-1/4})\) on weakly convex functions</h1>
+  <span class="post-meta">Damek Davis and Dmitriy Drusvyatskiy. Apr 2, 2018.</span><br>
+  
+  <span class="post-meta small">
+  
+    14 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>In this blog, we discuss our recent paper, (<a href="https://arxiv.org/abs/1802.02988">Davis and Drusyatskiy, 2018</a>). This work proves that the proximal stochastic subgradient method converges at a rate \(O(k^{-1/4})\) on weakly convex problems. In particular, it resolves the long-standing open question on the rate of convergence of the proximal stochastic gradient method (without batching) for minimizing a sum of a smooth function and a proximable convex function.</p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Stochastic optimization is a fundamental task in the statistical sciences, 
+underlying all aspects of learning from data. The goal of stochastic optimization in data science 
+is to learn a decision rule from a limited data sample, which generalizes well to the entire population.
+Learning such a decision rule amounts to  minimizing the <em>population risk</em>:</p>
+
+\[\begin{align}\label{eqn:SO}
+	\min_{x \in \mathbb{R}^d}~ \mathbb{E}_{\xi\sim P}[f(x,\xi)].\tag{$\mathcal{SO}$}
+\end{align}\]
+
+<p>Here, \(\xi\) encodes the population data, which is assumed 
+to follow some fixed but unknown probability distribution \(P\), 
+and the function \(f(x,\xi)\) evaluates the loss of the decision rule 
+parametrized by \(x\) on a data point \(\xi\).</p>
+
+<p>Robbins-Monro’s pioneering 1951 work gave the first procedure 
+for solving (\ref{eqn:SO}) when \(f(\cdot, \xi)\) are smooth and strongly convex, 
+inspiring decades of further research. Among such algorithms,
+the stochastic (sub)gradient method is the most successful and widely used in practice.
+This method constructs a sequence of approximations \(x_t\) of the minimizer of (\ref{eqn:SO})
+by traveling in the direction negative to a sample gradient:</p>
+
+\[\begin{equation*}\label{eqn:SG}
+	\textrm{Sample } \xi_t \sim P \\
+	\textrm{Set } x_{t+1}= x_t - \alpha_t \nabla_x f(x_t, \xi_t),\tag{$\mathcal{SG}$}
+\end{equation*}\]
+
+<p>where \(\alpha_t&gt;0\) is an appropriately chosen control sequence. 
+Nonsmooth convex problems may be similarly optimized by replacing sample gradients 
+by sample subgradients \(v_t\in \partial_x f(x_t,\xi_t)\), where
+\(\partial_x f(x_t, \xi_t)\) is the subdifferential
+in the sense of convex analysis; see for example, Part V in (Rockafellar, 1970).</p>
+
+<p>Performance of stochastic optimization methods is best judged 
+by their <em>sample complexity</em> – the number of i.i.d. realizations
+\(\xi_1, \ldots, \xi_N \sim P\) needed to reach a desired accuracy of the decision rule.
+Classical results such as by (Nemirovsky and Yudin, 1983) 
+stipulate that for convex problems, it suffices to generate
+\(O(\varepsilon^{-2})\) samples to reach functional accuracy \(\varepsilon\) in expectation, 
+and this complexity is unimprovable without making stronger assumptions.</p>
+
+<p>While the sample complexity of the stochastic subgradient method is well-understood for convex problems,
+much less is known for nonconvex problems. In particular, 
+the sample complexity of the method is not yet known for any 
+reasonably wide class of problems beyond those that are smooth or convex.
+This is somewhat concerning as the stochastic subgradient method is 
+the simplest and most widely used stochastic optimization algorithm for 
+large-scale problems arising in machine learning and is the core optimization subroutine 
+in industry backed software libraries, such as Google’s TensorFlow.</p>
+
+<p>In the recent paper (Davis and Drusvyatskiy, 2018), we aim to close the gap 
+between theory and practice and provide the first sample complexity bounds 
+for the stochastic subgradient method applied to a large class 
+of nonsmooth and nonconvex  optimization problems. The problem class we consider 
+captures a variety of important computational tasks in data science, as described below.</p>
+
+<p>Our guarantees apply to an even broader setting than population risk minimization (\ref{eqn:SO}). 
+Indeed, numerous tasks in machine learning and high dimensional statistics yield problems of the form</p>
+
+\[\begin{equation}\label{eqn:gen_err}
+	\min_{x\in\mathbb{R}^d}~ \varphi(x)=g(x)+r(x),\tag{$\mathcal{P}$}
+\end{equation}\]
+
+<p>where the functional components \(g\) and \(r\) play qualitatively different roles. 
+The function \(g\colon\mathbb{R}^d\to\mathbb{R}\) plays a similar role 
+to the population risk in (\ref{eqn:SO}). We will assume 
+that the only access to \(g\) is through stochastic estimates of 
+its (generalized) gradients. That is,  given a point \(x\), one can
+generate a random vector \(v\in\mathbb{R}^d\) satisfying 
+\(\mathbb{E}[v]\in \partial g(x)\). A formal definition of the 
+nonconvex subdifferential \(\partial g(x)\) is standard in
+the optimization literature; see Definition 8.3 in (Rockafellar and Wets, 1998). 
+The exact details will not be important for the blog. 
+We note however that when \(g\) is differentiable at \(x\), 
+the subdifferential \(\partial g(x)\) consists only of the gradient 
+\(\nabla g(x)\), while for convex functions, 
+it reduces to the subdifferential in the sense of convex analysis.</p>
+
+<p>In contrast, we assume the function \(r\colon\mathbb{R}^d\to\mathbb{R}\cup\{+\infty\}\)
+to be explicitly known and simple. It is often used to model constraints on the parameters
+ \(x\) or to encourage \(x\) to have some low dimensional structure, such as sparsity or low rank.
+ Within a Bayesian framework, the regularizer \(r\) can model prior distributional information on 
+ \(x\). One common assumption, which we also make here, is that
+ \(r\) is closed and convex and admits a computable proximal map</p>
+
+\[\begin{equation*}
+	{\rm prox}_{\alpha r}(x):= \underset{y}{\operatorname{argmin}}\, \left\{r(y)+\tfrac{1}{2\alpha}\|y-x\|^2\right\}.
+\end{equation*}\]
+
+<p>In particular, when \(r\) is an indicator function of a closed convex set 
+– meaning it equals zero on it and is \(+\infty\) off it – 
+the proximal map \({\rm prox}_{\alpha r}(\cdot)\) reduces to the nearest-point projection.</p>
+
+<p>The most widely used algorithm  for (\ref{eqn:gen_err}) is a direct generalization of (\ref{eqn:SG}), 
+called the <em>proximal stochastic subgradient method</em>. Given a current iterate \(x_t\), the
+method performs the update</p>
+
+\[\begin{equation*}\left\{
+	\begin{aligned}
+		&amp;\textrm{Generate a stochastic subgradient } v_t\in\mathbb{R}^d \textrm{ of } g \textrm{ at } x_t\\
+		&amp; \textrm{Set } x_{t+1}={\rm prox}_{\alpha_t r}\left(x_{t} - \alpha_t v_t\right)
+	\end{aligned}\right\},
+\end{equation*}\]
+
+<p>where \(\alpha_t&gt;0\) is an appropriately chosen control sequence.</p>
+
+<h1 id="the-search-for-stationary-points">The search for stationary points</h1>
+
+<p>Convex optimization algorithms are judged by the rate at which they decrease the function value along the iterate sequence. Analysis of smooth optimization algorithms  focuses instead on the magnitude of the gradients along the iterates. The situation becomes quite different for problems that are neither smooth nor convex.</p>
+
+<p>The primary goal, akin to smooth minimization, is the search for stationary points. 
+A point \(x\in\mathbb{R}^d\) is called <em>stationary</em> for the problem (\ref{eqn:gen_err}) if the inclusion \(0\in \partial \varphi(x)\) holds. In “primal terms”, these are precisely the points where the directional derivative of \(\varphi\) is nonnegative in every direction. Indeed, under mild conditions on \(\varphi\), equality holds; see Proposition 8.32 in (Rockafellar and Wets, 1998):</p>
+
+\[\begin{equation*} %\label{eqn:subdif_direc_der}
+	{\rm dist}(0;\partial \varphi(x))=-\inf_{v:\, \|v\|\leq 1} \varphi'(x;v).
+\end{equation*}\]
+
+<p>Thus a point \(x\), satisfying \({\rm dist}(0;\partial \varphi(x))\leq \varepsilon\), approximately satisfies first-order necessary conditions for optimality.</p>
+
+<p>An immediate difficulty in analyzing stochastic subgradient methods for nonsmooth and nonconvex problems is that it is not a priori clear how to measure the progress of the algorithm. Neither the functional suboptimality gap, \(\varphi(x_t)-\min \varphi\), nor the stationarity measure, \({\rm dist}(0;\partial \varphi(x_t))\), necessarily tend to zero along the iterate sequence. Indeed, what is missing is a continuous measure of stationarity to monitor, instead of the highly discontinuous function \(x\mapsto{\rm dist}(0;\partial \varphi(x))\).</p>
+
+<h1 id="weak-convexity-and-the-moreau-envelope">Weak convexity and the Moreau envelope</h1>
+
+<p>In the work (Davis and Drusvyatskiy, 2018), we focus on a class of problems that naturally admit a continuous measure of stationarity. We assume that \(g\colon\mathbb{R}^d\to\mathbb{R}\)  is a
+<em>\(\rho\)-weakly convex</em> function, meaning that the assignment \(x\mapsto g(x)+\frac{\rho}{2}\|x\|^2\) is convex. The class of weakly convex functions is  broad. It includes all convex functions and smooth functions with Lipschitz continuous gradient.
+More generally,  any function of the form \(g = h\circ c,\) with \(h\) convex and \(L\)-Lipschitz and \(c\) a smooth map with \(\beta\)-Lipschitz Jacobian, is weakly convex with constant \(\rho\leq L\beta\) ; see Lemma 4.2 in (Drusvyatskiy and Paquette, 2016). Notice that such composite functions need not be smooth nor convex. Classical literature highlights the importance of weak convexity in optimization (Rockafellar, 1982; Poliquin and Rockafellar, 1992; Poliquin and Rockafellar, 1996), while recent advances in statistical learning and signal processing have further reinvigorated the problem class. Nonlinear least squares, phase retrieval (Eldar and Mendelson, 2014; Duchi and Ruan, 2017; Davis, Drusvyatskiy, and Paquette, 2017), graph synchronization (Bandeira, Boumal, and Voroninski, 2016; Singer, 2011; Abbe, Bandeira, Bracher, and Singer, 2014), and robust principal component analysis (Candès, Li, Ma, and Wright, 2011; Chandrasekaran, Sanghavi, Parrilo, and Willsky, 2011) naturally lead to weakly convex formulations. For a recent discussion on the role of weak convexity in large-scale optimization, see e.g., (Drusvyatskiy, 2018) or the <a href="../../../01/25/proximal-point/">previous blog post</a>.</p>
+
+<p>It has been known since Nurminskii’s work (Nurminskii, 1974; Nurminskii 1973) that when \(g\) is \(\rho\)-weakly convex and \(r=0\), the stochastic subgradient method generates an iterate sequence that subsequentially converges to a stationary point of the problem, almost surely. Nonetheless, the sample complexity of the basic method and of its proximal extension, has remained elusive. Our approach to resolving this open problem relies on the elementary observation: weakly convex problems naturally admit a continuous measure of stationarity through implicit smoothing.
+The key construction we use is the <em>Moreau envelope</em>:</p>
+
+\[\varphi_{\lambda}(x):=\min_{y}~ \left\{\varphi(y)+\tfrac{1}{2\lambda}\|y-x\|^2\right\},\]
+
+<p>where \(\lambda &gt; 0\). Standard results such as Theorem 31.5 in (Rockafellar, 1970) show that as long as \(\lambda&lt;\rho^{-1}\), the envelope \(\varphi_{\lambda}\) is \(C^1\)-smooth with the gradient  given by</p>
+
+\[\begin{equation}\label{eqn:grad_form}
+	\nabla \varphi_{\lambda}(x)=\lambda^{-1}(x-{\rm prox}_{\lambda \varphi}(x)).
+\end{equation}\]
+
+<p>When \(r=0\) and \(g\) is smooth, the norm \(\|\nabla \varphi_{\lambda}(x)\|\) is proportional to the magnitude of the true gradient \(\|\nabla g(x)\|\).
+In the broader nonsmooth setting, the norm of the gradient \(\|\nabla \varphi_{\lambda}(x)\|\) has an intuitive interpretation in terms of near-stationarity for the target problem (\ref{eqn:gen_err}). Namely, the definition of the Moreau envelope directly implies that for any point \(x\in\mathbb{R}^d\), the proximal point \(\hat x:={\rm prox}_{\lambda \varphi}(x)\) satisfies</p>
+
+\[\begin{equation*}
+	\left\{\begin{array}{cl}
+		\|\hat{x}-x\|&amp;=  \lambda\|\nabla \varphi_{\lambda}(x)\|,\\ %F(\hat x)-F(S_t(x))&amp;\leq \frac{t}{2}(L\beta t+1)\|\mathcal{G}_t(x)\|^2,\\
+		\varphi(\hat x) &amp;\leq \varphi(x),\\
+		{\rm dist}(0;\partial \varphi(\hat{x}))&amp;\leq \|\nabla \varphi_{\lambda}(x)\|.
+	\end{array}\right. 
+\end{equation*}\]
+
+<p>Thus a small gradient \(\|\nabla \varphi_{\lambda}(x)\|\) implies that \(x\) is <em>near</em> some point \(\hat x\) that is <em>nearly stationary</em> for (\ref{eqn:gen_err}).
+For a longer discussion of the near-stationarity concept, see   (Drusvyatskiy, 2018; Section 4.1 in Drusvyatskiy and Paquette, 2016), or the <a href="../../../01/25/proximal-point/">previous blog post</a>.</p>
+
+<h1 id="contributions">Contributions</h1>
+
+<p>In the paper (Davis and Drusvyatskiy, 2018), we show that under an appropriate choice of the  sequence \(\alpha_t\), the proximal stochastic subgradient method will generate a point \(x\) satisfying \(\mathbb{E}\|\nabla \varphi_{1/(2\rho)}(x)\|\leq \varepsilon\) after at most \(O(\varepsilon^{-4})\) iterations.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup>This is perhaps surprising, since neither the Moreau envelope \(\varphi_{\lambda}(\cdot)\) nor the proximal map \({\rm prox}_{\lambda \varphi}(\cdot)\) explicitly appear in the definition of the stochastic subgradient method. Our work appears to be the first to recognize the Moreau envelope as a useful potential function for analyzing subgradient methods.</p>
+
+<p>The convergence guarantees we develop are new even in simplified cases. Two such settings are (a) when \(g\) is smooth and \(r\) is the indicator function of a closed convex set, and (b) when \(g\) is nonsmooth, \(r = 0\), and we have explicit access to the exact subgradients of \(g\).</p>
+
+<h1 id="related-literature-and-context">Related Literature and Context</h1>
+
+<p>Analogous convergence guarantees when \(r\) is an indicator function of a closed convex set were recently established for a different algorithm in (Davis and Grimmer, 2017), called the proximally guided projected subgradient method. This scheme proceeds by directly applying the gradient descent method to the Moreau envelope \(\varphi_{\lambda}\), with each proximal point \({\rm prox}_{\lambda \varphi}(x)\) approximately evaluated by a convex subgradient method. In contrast, we showed  that the basic stochastic subgradient method in the fully proximal setting, and without any modification or parameter tuning, already satisfies the desired convergence guarantees.</p>
+
+<p>Our work also improves in two fundamental ways on the results in the seminal papers on the stochastic proximal gradient method for smooth functions (Ghadimi and Lan, 2013; Ghadimi, Lan, and Zhang, 2016; Xu and Yin, 2015): first, we allow \(g\) to be nonsmooth and second, even when \(g\) is smooth we do not require the variance of our stochastic estimator for \(\nabla g(x_t)\) to decrease as a function of \(t\). The second contribution removes the well-known “mini-batching” requirements common to (Ghadimi, Lan, and Zhang, 2016; Xu and Yin, 2015), while the first significantly expands the class of functions for which the rate of convergence of the stochastic proximal subgradient method is known.</p>
+
+<p>The results in this paper are orthogonal to the recent line of work on accelerated rates of convergence for smooth nonconvex finite sum minimization problems, e.g.,(Lei, Ju, Chen, and Jordan, 2017; <em>Katyusha</em>, Allen-Zhu, 2017; Reddi, Sra, Poczos, Smola, 2016; <em>Natasha 2</em>, Allen-Zhu, 2017). These works crucially exploit the finite sum structure and/or (higher order) smoothness of the objective functions to push beyond the \(O(\varepsilon^{-4})\) complexity. We leave it as an intriguing open question whether such improvement is possible for the nonsmooth weakly convex setting we consider here.</p>
+
+<h1 id="references">References</h1>
+
+<p>E. Abbe, A.S. Bandeira, A. Bracher, and A. Singer. Decoding binary node labels from censored edge measurements: phase transition and efficient recovery. <em>IEEE Trans. Network Sci. Eng.,</em> 1(1):10-22, 2014.</p>
+
+<p>Z. Allen-Zhu. Katyusha: The First Direct Acceleration of Stochastic Gradient Methods. In <em>STOC,</em> 2017.</p>
+
+<p>Z. Allen-Zhu. Natasha 2: Faster non-convex optimization than sgd. <em>arXiv preprint arXiv:1708.08694</em>, 2017.</p>
+
+<p>Z. Allen-Zhu. How to make gradients small stochastically. <em>Preprint arXiv:1801.02982 (version 1),</em> 2018.</p>
+
+<p>A.S. Bandeira, N. Boumal, and V. Voroninski. On the low-rank approach for semidefinite programs arising in synchronization and community detection. In <em>Proceedings of the 29th Conference on Learning Theory, COLT 2016, New York, June 23-26, 2016,</em> pages 361-382, 2016.</p>
+
+<p>E.J. Candès, X. Li, Y. Ma, and J. Wright. Robust principal component analysis? <em>J. ACM</em>, 58(3):Art. 11, 37, 2011.</p>
+
+<p>V. Chandrasekaran, S. Sanghavi, P. A. Parrilo, and A.S. Willsky. Rank-sparsity incoherence for matrix decomposition. <em>SIAM J Optim.,</em> 21(2):572-596, 2011.</p>
+
+<p>D. Davis and D. Drusvyatskiy. Complexity of finding near-stationary points of convex functions stochastically. <em>arXiv:1802.08556</em>, 2018.</p>
+
+<p>D. Davis and D. Drusvyatskiy. Stochastic subgradient method converges at the rate $(O(k^{-1/4})$ on weakly convex functions. <em>arXiv: 1802.02988</em>, 2018.</p>
+
+<p>D. Davis, D. Drusvyatskiy, and C. Paquette. The nonsmooth landscape of phase retrieval. <em>Preprint arXiv:1711.03247</em>, 2017.</p>
+
+<p>D. Davis and B. Grimmer. Proximally guided stochastic method for nonsmooth, non-convex problems. <em>Preprint arXiv:1707.03505,</em> 2017.</p>
+
+<p>D. Drusvyatskiy. The proximal point method revisited. <em>To appear in the SIAG/OPT Views and News, arXiv:1712.06038,</em> 2018.</p>
+
+<p>D. Drusvyatskiy and C. Paquette. Efficiency of minimizing compositions of convex functions and smooth maps. <em>Preprint arXiv:1605.00125</em>, 2016.</p>
+
+<p>J.C. Duchi and F. Ruan. Solving (most) of a set of quadratic equalities: Composite optimization for robust phase retrieval. <em>Preprint arXiv:1705.02356</em>, 2017.</p>
+
+<p>Y.C. Eldar and S. Mendelson. Phase retrieval: stability and recovery guarantees. <em>Appl. Comput. Harmon. Anal.,</em> 36(3):473-494, 2014.</p>
+
+<p>S. Ghadimi and G. Lan. Stochastic first- and zeroth-order methods for nonconvex stochastic programming. <em>SIAM J. Optim.,</em> 23(4):2341-2368, 2013.</p>
+
+<p>S. Ghadimi, G. Lan, and H. Zhang. Mini-batch stochastic approximation methods for nonconvex stochastic composite optimization, <em>Math. Program.,</em> 155(1):267-305, 2016.</p>
+
+<p>L. Lei, C. Ju, J. Chen, and M.I Jordan. Non-convex finite-sum optimization via scsg methods. In <em>Advances in Neural Information Processing Systems,</em> pages 2345-2355, 2017.</p>
+
+<p>A.S. Nemirovsky and D.B. Yudin. <em>Problem complexity and method efficiency in optimization</em>. A Wiley-Interscience Publication. John Wiley &amp; Sons, Inc., New York, 1983.</p>
+
+<p>E. A. Nurminskii. The quasigradient method for the solving of the nonlinear programming problems. <em>Cybernetics,</em> 9(1):145-150, Jan 1973.</p>
+
+<p>E. A. Nurminskii. Minimization of nondifferentiable functions in the presence of noise. <em>Cybernetics</em>, 10(4):619-621, Jul 1974.</p>
+
+<p>R.A. Poliquin and R.T. Rockafellar. Amenable functions in optimization. In <em>Nonsmooth optimization: methods and applications (Erice, 1991),</em> pages 338-353. Gordon and Breach, Montreaux, 1992.</p>
+
+<p>R.A. Poliquin and R.T. Rockafellar. Prox-regular functions in variational analysis. <em>Trans. Amer. Math. Soc.</em>, 348:1805-1838, 1996.</p>
+
+<p>Sashank J Reddi, Suvrit Sra, Barnabas Poczos, and Alexander J Smola. Proximal stochastic methods for nonsmooth nonconvex finite-sum optimization. In <em>Advances in Neural Information Processing Systems</em>, pages 1145-1153, 2016.</p>
+
+<p>R.T. Rockafellar. <em>Convex Analysis</em>. Princeton University Press, 1970.</p>
+
+<p>R.T. Rockafellar. Favorable classes of Lipschitz-continuous functions in subgradient optimization. In <em>Progress in nondifferentiable optimization</em>, volume 8 of IIASA <em>Collaborative Proc. Ser. CP-82</em>, pages 125-143. Int. Inst. Appl. Sys. Anal., Laxenburg, 1982.</p>
+
+<p>R.T. Rockafellar and R.J-B. Wets. <em>Variational Analysis</em>. Grundlehren der mathemtischen Wissenschaften, Vol 317, Springer, Berlin, 1998.</p>
+
+<p>A. Singer. Angular synchronization by eigenvectors and semidefinite programming. <em>Appl. Comput. Harmon. Anal.,</em> 30(1):20-36, 2011.</p>
+
+<p>Y. Xu and W. Yin. Block stochastic gradient iteation for convex and nonconvex optimization. <em>SIAM J. Optim.,</em> 25(3):1686-1716, 2015.</p>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>In the supplementary text (<a href="https://arxiv.org/abs/1802.08556">Davis and Drusvyatskiy, 2018</a>), we also showed that when \(g\) happens to be convex, this complexity can be improved to \(\widetilde{O}(\varepsilon^{-2})\)  by adapting a gradual regularization technique of (Allen-Zhu, 2018). <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+</footer>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112084371-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112084371-1');
+</script>
+
+</body>
+</html>

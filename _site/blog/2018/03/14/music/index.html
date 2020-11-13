@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Acoustic models for music transcription &#8211; UW Institute on the Algorithmic Foundations of Data Science</title>
+    <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Recent work on music-to-score alignment and translation-invariant networks for music transcription">
+    <meta name="robots" content="all">
+    <meta name="author" content="Sham Kakade">
+    
+    <meta name="keywords" content="blog">
+    <link rel="canonical" href="http://localhost:4000/blog/2018/03/14/music/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for UW Institute on the Algorithmic Foundations of Data Science" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?202011120026" type="text/css">
+
+    <!-- Fonts -->
+    
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+    
+
+    <!-- MathJax -->
+    
+    <script type="text/javascript" async
+        src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <!-- Verifications -->
+    
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Acoustic models for music transcription">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="http://localhost:4000/blog/2018/03/14/music/">
+    <meta property="og:site_name" content="UW Institute on the Algorithmic Foundations of Data Science">
+    
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+    <meta name="twitter:title" content="Acoustic models for music transcription" />
+    <meta name="twitter:description" content="Recent work on music-to-score alignment and translation-invariant networks for music transcription" />
+    <meta name="twitter:url" content="http://localhost:4000/blog/2018/03/14/music/" />
+    
+
+    <!-- Icons -->
+    <!-- <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"> -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#ffffff">
+
+    
+</head>
+
+<body class="site">
+  
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <div style="width:100%">
+      <a href="/"><img src="/images/ifds.png" style="width:30%;float:left;"></a>
+      <a href="https://nsf-tripods.org/"><img src="/images/NSF.gif" style="width:15%;margin-left:12.5%;float:left;"></a>
+      <a href="http://escience.washington.edu/"><img src="/images/eScience.png" style="width:30%;float:right;"></a>
+        <div style="clear: both;"></div>
+      </div>
+      
+      <nav class="site-nav">
+        
+
+
+
+    
+    
+    
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/about.html">About</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/index.html">News</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/publications.html">Publications</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/seminars.html">Seminars</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/courses.html">Courses</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/members.html">Members</a>
+    
+
+    
+
+    
+    
+    
+    
+        <a href="/blog.html">Blog</a>
+    
+
+    
+
+
+
+<div class="dropdown">
+  <button class="dropbtn">Workshops</button>
+  <div class="dropdown-content">
+    <a href="https://alecgt.github.io/adsi_summer/" style="margin-left:0em;"><font size=2px>ADSI Summer School</font></a>
+    <a href="https://ajwagen.github.io/adsi_learning_and_control/" style="margin-left:0em;"><font size=2px>ADSI Workshop</font></a>
+  </div>
+</div>
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+ 
+  
+  <a href="https://homes.cs.washington.edu/~thickstn/" style="text-decoration: none" class="post-link">
+  
+    <img src="/images/performance_loop.jpeg" style="width:30%;float:right;">
+  
+  </a>
+  
+ 
+  
+  
+  <h1>Acoustic models for music transcription</h1>
+  <span class="post-meta">John Thickstun. Mar 14, 2018.</span><br>
+  
+  <span class="post-meta small">
+  
+    14 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <h1 id="introduction">Introduction</h1>
+
+<p>The production of classical western music is a two stage process. First
+a composer writes down a score: written notation that indicates a
+particular musical structure. Then a performer reads this score and
+manipulates an instrument as indicated by the score to produce audio
+waves that a human ear perceives as music. A trained musician is also
+capable of transcribing a performance: while listening to a musical
+performance, the musician can write down the score that the performer
+used to guide the performance.</p>
+
+<figure>
+<center>
+  <img src="http://localhost:4000/images/performance_loop.jpeg" alt="my alt text" />
+    </center>
+  <figcaption><p><font size="3">Figure 1. A musician creates a musical performance from a score. A performance can be transcribed by a musician to recover the score.</font></p></figcaption>
+</figure>
+
+<p>The closed loop in this figure implies that the musician and
+transcription channels are lossless. Indeed, for western classical music
+this is mostly the case: performers are expected to render a faithful
+performance of the score provided to them, and so it is possible for the
+transcriber to precisely recover the original score.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup> In this post,
+we will consider methods that replace the human transcriber in this loop
+with an automated algorithm.</p>
+
+<h1 id="notation">Notation</h1>
+
+<p>Let \(\mathcal{S}\) denote the space of scores and \(\mathcal{P}\) the space
+of performances. We will write \(f : \mathcal{S} \to \mathcal{P}\) to
+indicate a performance of a score (\(f\) will be random, to account for
+variability in the performance of a particular score). We want to find
+an inverse function \(f^{-1} : \mathcal{P} \to \mathcal{S}\) such that
+\(f^{-1} \circ f (s) = s\) for all \(s \in \mathcal{S}\).</p>
+
+<p>Specifically, we will represent a score as a binary indicator matrix
+\(s \in \{0,1\}^{T \times N}\), where \(T\) is the length of the score
+(discretized at some rate) and \(N\) is the range of possible notes (e.g.
+\(88\) piano keys). We can represent a performance with air pressure
+variation measurements captured by a microphone; these measurements are typically sampled at a rate of \(44.1kHz\), so a performance of length \(T\) can be represented by a vector \(p \in \mathbb{R}^{T\times 44100}\). One
+way to formulate our problem is to ask for a function
+\(f^{-1} : \mathbb{R}^{T\times 44100} \to \{0,1\}^{T \times N}\) such that
+\(f^{-1}\circ f(s) = s\) for all \(s \in \mathcal{S}\).</p>
+
+<p>This formulation has some major flaws. First, it is extremely highly
+dimensional. Second, it only works for scores of length \(T\); if we
+encounter a score of some other length, our function is undefined and we
+cannot transcribe it. What we really want is a function
+\(f^{-1} : \mathbb{R}^{c \times 44100} \to \{0,1\}^N\) that predicts which
+notes are on at a particular time \(t \in [0,T)\) given a local vector of
+contextual audio surrounding time \(t\) (in practice \(c = .5\), a half
+second of context, is usually reasonable). To transcribe a recording and
+construct a full \(T \times N\) dimensional score, we can simply slide our
+frame predictor along from the beginning to the end of the audio,
+writing down the notes at each time point.</p>
+
+<figure>
+<center>
+  <img src="http://localhost:4000/images/frame_based_transcription.jpeg" alt="my alt text" />
+  </center>
+  <figcaption><p><font size="3">Figure 2. (Left) Audio recording, with highlighted half-second frame of context for prediction of notes at time \(500\) ms. (Right) Score with highlighted note-vector that we wish to predict. </font></p></figcaption>
+</figure>
+
+<h1 id="historical-highlights">Historical highlights</h1>
+
+<p>Transcription methods based on fourier analysis were proposed as early
+as the 1970s by Piszczalski and Galler (1977). The machine learning
+community took an interest in this problem beginning with Raphael
+(2002). Early work on this problem from a learning perspective was
+stymied by the difficulty of obtaining labels on an audio sequence. A
+score on its own is insufficient in two ways. First, it must be
+digitized: a pdf score cannot be easily converted to a binary matrix
+format. Second, it must be aligned to a recording: a score describes the
+sequence and relative timings of events in a performance, but the
+performer decides:</p>
+
+<ul>
+  <li>
+    <p>When the performance will begin.</p>
+  </li>
+  <li>
+    <p>The speed of the performance (within bounds set by the composer).</p>
+  </li>
+  <li>
+    <p>Deliberate deviations from this speed for emotional effect.</p>
+  </li>
+  <li>
+    <p>Random fluctuations in the speed due to human fallibility.</p>
+  </li>
+</ul>
+
+<p>Each of these problems is daunting, so early work focused on
+unsupervised methods (Raphael’s work fits an HMM with Baum-Welch).</p>
+
+<p>To the best of my knowledge, music transcription was first considered as
+a supervised learning problem by Poliner and Ellis (2006). These
+researchers surmounted the digitization problem by leveraging a growing
+body of MIDI files, produced by a community of enthusiasts, which encode
+much of the information of a score in a parsable digital format. They
+surmounted the alignment problem by producing their own performances
+using music synthesis software. By constructing artificial performances,
+they were able to exert precise control over timings in the resulting
+audio and exactly align their MIDIs to the audio.</p>
+
+<h1 id="recent-developments">Recent developments</h1>
+
+<p>Within the supervised transcription framework introduced in Poliner and
+Ellis, there are at least three avenues for performance improvements.
+First, models trained on synthesized performances may not generalize
+well to human performances so we may want to construct a better dataset.
+Second, the model introduced by Poliner and Ellis is a standard SVM on
+magnitude spectrum features; it may be possible to construct a better
+acoustic model, tailored with prior information about the structure of
+music. Third, the frame-based framework doesn’t capture the (rich)
+time-series structure of the label space: each frame is predicted
+independently.</p>
+
+<p><strong>Datasets.</strong> The easiest way to solve the domain adaptation problem is
+to eliminate it by finding some way to align human performances to
+scores. A solution to this problem was proposed in an earlier paper by
+Ellis himself (Turetsky and Ellis, 2003). We discuss MusicNet below,
+which was constructed using a variant of Ellis’s technique. As of 2018,
+many datasets of music-aligned scores are available for various genres:</p>
+
+<ul>
+  <li>
+    <p>Sync-RWC. Goto, Hashiguchi, Nishimura, and Oka (2003).</p>
+  </li>
+  <li>
+    <p>MAPS. Emiya, Badeau, and David (2010).</p>
+  </li>
+  <li>
+    <p>Lakh. Raffel (2016).</p>
+  </li>
+  <li>
+    <p>MusicNet. Thickstun, Harchaoui, and Kakade (2017).</p>
+  </li>
+</ul>
+
+<p><strong>Acoustic models.</strong> Neural acoustic models have become popular in
+recent years. Several research teams have proposed deep acoustic models
+for transcription: see Nam, Ngiam, Lee, and Slaney (2011) as well as
+Trabelsi, Bilaniuk, Serdyuk, Subramanian, Santos, Mehri, Rostamzadeh,
+Bengio, and Pal (2018). There has also been interest in applying
+convolutional ideas to transcription: Bittner, McFee, Salamon, Li, and
+Bello (2017), as well as Pons and Serra (2017). Our own work at
+University of Washington (discussed below) also pursues some of these
+convolutional ideas: Thickstun, Harchaoui, and Kakade (2017) and
+Thickstun, Harchaoui, Foster, and Kakade (2018).</p>
+
+<p><strong>Time series.</strong> Some recent work breaks away from the strict
+frame-based task and seeks to incorporate time-series structure in the
+label space of scores to improve transcriptions. These methods typically
+combine a frame-based acoustic model with a recurrent state-space model.
+See Sigtia, Benetos, Boulanger-Lewandowski, Weyde, Garcez, and Dixon
+(2015) as well as Sigtia, Benetos, and Dixon (2016). These ideas are
+crucially important to achieving the best performance on this task, but
+they are somewhat orthogonal to the acoustic modeling concerns and we
+won’t consider them in this post.</p>
+
+<h1 id="music-to-score-alignment">Music-to-score alignment</h1>
+
+<p>To align a performance to a score, we need an observation and a key
+idea. The observation is that if a performance and score are aligned,
+then at each time location \(t\) the vector of notes in the score
+\(s_t \in \{0,1\}^{128}\) and the local frame of audio
+\(X_t \in \mathbb{R}^{c\times 44100}\) will be “similar,” in the sense of
+a cost \(C\) that we will make precise shortly. The key idea is to
+minimize the total dissimilarity at each point \(t \in [0,T)\) between
+\(X_t\) and \(s_t\). We do this by shrinking or stretching the performance
+\(X \in \mathcal{P}\), resulting in a minimal-cost alignment between the
+performance and the score.</p>
+
+<p>Mathematically, this shrinking and stretching amounts to solving the
+following optimization problem (\(X_{t_i} \in \mathbb{R}^{c\times 44100}\)
+indicates the local contextual frame of audio in the performance \(X\)
+centered around time \(t_i\)):</p>
+
+\[\begin{array}{ll@{}ll}
+\underset{t \in \mathbb{N}^T}{\text{minimize}} &amp; \displaystyle\sum_{i=1}^n C(X_{t_i},s_i)&amp;\\
+\text{subject to}&amp; t_0 = 0, &amp; \\
+                         &amp; t_n = m, &amp; \\
+                         &amp; t_i \leq t_j &amp; \text{if $i &lt; j$}. &amp; 
+\end{array}\]
+
+<p>Dynamic time warping gives an exact solution to this
+problem in \(\mathcal{O}(mn)\) time and space, where \(m\) is the length of
+the performance and \(n\) is the length of the score.</p>
+
+<figure>
+<center>
+  <img src="http://localhost:4000/images/alignment.jpeg" alt="my alt text" />
+  </center>
+  <figcaption><p><font size="3">Figure 3. (Left) A heatmap of local alignment costs between the synthesized and recorded spectrograms, with the optimal alignment path in red. The block from \(x = 0\) to \(x = 100\) frames corresponds to silence at the beginning of the recorded performance. The slope of the alignment can be interpreted as an instantaneous tempo ratio between the recorded and synthesized performances. The curvature in the alignment between \(x = 100\) and \(x = 175\) corresponds to an extension of the first notes by the performer. (Right) Annotation of note onsets on the spectrogram of the recorded performance, determined by the alignment shown on the left. </font></p></figcaption>
+</figure>
+
+<p>The success of dynamic time warping depends crucially on defining a good
+cost metric; i.e. a cost that is small at points where \(X\) and \(s\) are
+well-aligned. This is complicated by the fact that points \(X_{t_i}\) and
+\(s_i\) do not even live in the same space. The clever idea introduced by
+Turetsky and Ellis (2003) is to map the score \(s\) into performance-space
+by synthesizing it. Now we have two vectors \(X_t\) and
+\(\text{Synth}(s_i)\) in \(\mathbb{R}^{c\times 44100}\) and we can compare
+them using standard metrics (e.g. \(L^p\) metrics). Actually, we need to
+be a little more clever than this; we really want our comparisons to be
+phase-invariant, so we will actually further transform each of our
+vectors into the fourier domain and compare their magnitude spectra.</p>
+
+<p>We can and have applied this automated alignment procedure to construct
+a large dataset of labeled classical music. MusicNet is available <a href="https://homes.cs.washington.edu/~thickstn/musicnet.html">here</a>.
+For further information about the construction and contents of MusicNet,
+see Thickstun, Harchaoui, and Kakade (2017).</p>
+
+<h1 id="translation-invariant-networks">Translation-invariant networks</h1>
+
+<p>Prepared with a large dataset of labeled human performances, we can turn
+our attention to models that efficiently capture the structure between
+the performances and labels. While we can produce a large dataset using
+automated alignments, it is necessarily finite. This stands in contrast
+with synthesized datasets, which can be configured to generate an
+effectively infinite stream of artificial performances. Therefore we
+will focus on models that efficiently capture correlations in our data.
+Keeping the bias-variance tradeoff in mind, we will bias our model using
+prior information about music.</p>
+
+<p>In particular, we will exploit a translation-invariance in music using a
+convolutional architecture. Consider, for motivation, a major triad
+chord. The concept of a major chord is preserved under translations in
+log-frequency space. If we learn convolutional filters over the
+log-frequency domain, we can capture the concept of a major triad using
+a single filter. Contrast this situation to a fully connected layer over
+log-frequencies, which would need to learn this pattern many times over,
+once for each root position of the chord. Therefore, our first step will
+be to pre-process our data by mapping it into a log-frequency domain. We
+will then convolve along the frequency axis of our filterbank to capture
+frequency-invariant features of our data.</p>
+
+<figure>
+<center>
+  <img src="http://localhost:4000/images/MIREX_architecture2.png" alt="my alt text" />
+  </center>
+  <figcaption><p><font size="3">Figure 4. A translation-invariant network for note classification. Audio input
+maps to Layer 1 according to the log-spaced, cosine-windowed filterbank.
+Layer 1 maps to Layer 2 by convolving a set of \(128 \times 1\) learned
+filters along the log-frequency axis at each fixed time location. Layer
+2 maps to Layer 3 by convolving again along the log-frequency axis, this
+time with a set of filters of height 1 that fully connect along the time
+and channel axes of Layer 2. Notes are predicted at Layer 4 by linear
+classification on the Layer 3
+representation. </font></p></figcaption>
+</figure>
+
+<p>Further exploiting our awareness of frequency-invariance, we augment our
+data by stretching or shrinking our input audio with linear
+interpolation. This corresponds to a pitch-shift in the frequency
+domain. For small shifts (\(\pm 5\) semitones or less) the transformed
+audio sounds natural to the human ear. Randomly shifting each data point
+in a minibatch by an integral number of semitones in the range \([-5, 5]\)
+augments the dataset by an order of magnitude. And the translational
+nature of this augmentation reinforces the architectural structure of
+the translation-invariant network. In addition to an integral semitone
+shift, we also apply a continuous shift to each data point in the range
+\([-.1, .1]\). This makes the models more robust to tuning variation
+between recordings.</p>
+
+<p>Last year we submitted this translation-invariant model to the MIREX
+Multiple Fundamental Frequency Estimation challenge. This is a
+frame-based transcription task based on the Poliner and Ellis framework
+discussed in this blog post. Table 1 summarizes results for the top 5
+participants in 2017. THK1 is the translation-invariant model described
+in this section. For further information about the translation-invariant
+network architecture see Thickstun, Harchaoui, Foster, and Kakade
+(2018).</p>
+
+<figure>
+<center>
+<font size="4">
+<table style="width:80%; border:0 none; font-size:80%; border-collapse: collapse;" rules="none">
+  <tr>
+    <td>Model</td>
+    <td>Precision</td>
+    <td>Recall</td>
+    <td>Accuracy</td>
+    <td>Etot </td>
+  </tr>
+  <tr>
+    <th colspan="5" align="left">MIREX 2009 Dataset:</th>
+  </tr>
+  <tr>
+    <td>THK1</td>
+    <td>82.2</td>
+    <td>78.9 </td>
+    <td><span style="font-weight:bold">72.0</span></td>
+    <td><span style="font-weight:bold">.316 </span></td>
+  </tr>
+    <tr class="no-border">
+    <td>KD1</td>
+    <td>72.4</td>
+    <td> 81.1 </td>
+    <td>66.9 </td>
+    <td>.419 </td>
+  </tr>
+      <tr class="no-border">
+    <td>MHMTM1</td>
+    <td>72.7</td>
+    <td>78.2 </td>
+    <td>65.5  </td>
+    <td>.441</td>
+  </tr>
+        <tr>
+    <td>WCS1 </td>
+    <td> 64.0 </td>
+    <td>80.6  </td>
+    <td>59.3  </td>
+    <td>.569</td>
+  </tr>
+          <tr>
+    <td>ZCY2</td>
+    <td> 62.7</td>
+    <td>56.2  </td>
+    <td>50.6  </td>
+    <td> .601</td>
+  </tr>
+    <tr>
+    <th colspan="5" align="left">Su Dataset:</th>
+  </tr>
+  <tr>
+    <td>THK1</td> 
+    <td>70.1</td>
+    <td>54.6 </td>
+    <td><span style="font-weight:bold">51.0</span></td>
+    <td><span style="font-weight:bold">.529 </span></td>
+  </tr>
+    <tr style="border:0 none;">
+    <td>KD1</td> 
+    <td>45.9 </td>
+    <td> 45.0  </td>
+    <td> 38.1 </td>
+    <td> .745 </td>
+  </tr>
+      <tr style="border:0 none;">
+    <td>WCS1</td>
+    <td> 63.6</td> 
+    <td>39.7</td>
+    <td>35.7</td>
+    <td> .700</td>
+  </tr>
+        <tr>
+    <td>MHMTM1 </td>
+    <td> 61.2  </td> 
+    <td>36.8  </td>
+    <td>35.2   </td>
+    <td>.676</td>
+  </tr>
+          <tr>
+    <td>ZCY2</td> 
+    <td> 40.9</td>
+    <td> 28.2  </td>
+    <td>26.2  </td>
+    <td> .799</td>
+  </tr>
+</table>
+  </font>
+  </center>
+  <figcaption><p><font size="3">
+    Table 1. MIREX 2017 transcription results. Models are evaluated on two
+  datasets, the MIREX 2009 dataset and the Su dataset. For details, see 
+  <a href="http://www.music-ir.org/mirex/wiki/2017:Multiple_Fundamental_Frequency_Estimation_%26_Tracking_Results_-_MIREX_Dataset">here</a>. 
+  </font></p></figcaption>
+  </figure>
+
+<h1 id="references">References</h1>
+
+<p>Martin Piszczalski and Bernard A. Galler. 1977. “Automatic music transcription.”  <em>Computer Music Journal</em>, Vol. 1, No. 4, pp. 24-31.
+ <a href="https://www.jstor.org/stable/40731297">https://www.jstor.org/stable/40731297</a></p>
+
+<p>Christopher Raphael. 2002. “Automatic transcription of piano music.” <em>Proceedings of the International Society of Music Information Retrieval.</em>
+<a href="http://www.ismir2002.ismir.net/proceedings/02-FP01-2.pdf">http://www.ismir2002.ismir.net/proceedings/02-FP01-2.pdf</a></p>
+
+<p>Graham E. Poliner and Daniel P. W. Ellis. 2006. “A discriminative model for polyphonic piano transcription.” <em>EURASIP Journal on Applied Signal Processing.</em>
+<a href="https://link.springer.com/content/pdf/10.1155/2007/48317.pdf">https://link.springer.com/content/pdf/10.1155/2007/48317.pdf</a></p>
+
+<p>Robert J. Turetsky and Daniel P. W. Ellis. 2003. “Ground-truth transcriptions of real music from force-aligned midi syntheses.”
+<a href="https://jscholarship.library.jhu.edu/bitstream/handle/1774.2/20/paper.pdf">https://jscholarship.library.jhu.edu/bitstream/handle/1774.2/20/paper.pdf</a></p>
+
+<p>Masataka Goto, Hiroki Hashiguchi, Takuichi Nishimura, and Ryuichi Oka.2003. “RWC music database: Music genre database and musical instrument sound database.”
+<a href="https://jscholarship.library.jhu.edu/bitstream/handle/1774.2/36/paper.pdf">https://jscholarship.library.jhu.edu/bitstream/handle/1774.2/36/paper.pdf</a></p>
+
+<p>Colin Raffel. 2016. “Learning-based methods for comparing sequences, with applications to audio-to-midi alignment and matching.” PhD Thesis.
+<a href="http://colinraffel.com/publications/thesis.pdf">http://colinraffel.com/publications/thesis.pdf</a></p>
+
+<p>Juhan Nam, Jiquan Ngiam, Honglak Lee, and Malcolm Slaney. 2011. “A Classification-Based Polyphonic Piano Transcription Approach Using Learned Feature Representations.” <em>International Society of Music Information Retrieval</em>, pp. 175-180.
+<a href="https://www-cs.stanford.edu/~jngiam/papers/ismir2011-PolyphonicTranscription.pdf">https://www-cs.stanford.edu/~jngiam/papers/ismir2011-PolyphonicTranscription.pdf</a></p>
+
+<p>Chiheb Trabelsi, Olexa Bilaniuk, Dmitriy Serdyuk, Sandeep Subramanian, João Felipe Santos, Soroush Mehri, Negar Rostamzadeh, Yoshua Bengio, and Christopher J. Pal. 2018. “Deep complex networks.” <em>International Conference on Learning Representations.</em>
+<a href="https://arxiv.org/pdf/1705.09792.pdf">https://arxiv.org/pdf/1705.09792.pdf</a></p>
+
+<p>Rachel M. Bittner, Brian McFee, Justin Salamon, Peter Li, and Juan P. Bello. 2017. “Deep salience representations for f0 estimation in polyphonic music.” <em>International Society for Music Information Retrieval Conference</em>, Suzhou, China, pp. 23-27.
+<a href="http://www.justinsalamon.com/uploads/4/3/9/4/4394963/bittner_deepsalience_ismir_2017.pdf">http://www.justinsalamon.com/uploads/4/3/9/4/4394963/bittner_deepsalience_ismir_2017.pdf</a></p>
+
+<p>Jordi Pons and Xavier Serra. 2017. “Designing efficient architectures for modeling temporal features with convolutional neural networks.” In <em>IEEE International Conference on Acoustics, Speech and Signal Processing</em>, pp. 2472-2476.
+<a href="http://jordipons.me/media/PonsSerraICASSP2017.pdf">http://jordipons.me/media/PonsSerraICASSP2017.pdf</a></p>
+
+<p>John Thickstun, Zaid Harchaoui, and Sham M. Kakade. 2017. “Learning features of music from scratch.” In <em>International Conference on Learning Representations</em>.
+<a href="https://arxiv.org/pdf/1611.09827.pdf">https://arxiv.org/pdf/1611.09827.pdf</a></p>
+
+<p>John Thickstun, Zaid Harchaoui, Dean P. Foster, and Sham M. Kakade. 2018. “Invariances and data augmentation for supervised music transcription.” In <em>IEEE International Conference on Acoustics, Speech, and Signal Processing.</em>
+<a href="https://arxiv.org/abs/1711.04845">https://arxiv.org/abs/1711.04845</a></p>
+
+<p>Siddharth Sigtia, Emmanouil Benetos, Nicolas Boulanger-Lewandowski, Tillman Weyde, Artur S. d’Avila Garcez, and Simon Dixon. 2015. “A hybrid recurrent neural network for music transcription.” In <em>IEEE International Conference on Acoustics, Speech and Signal Processing</em>, pp. 2061-2065.
+<a href="https://arxiv.org/pdf/1411.1623.pdf">https://arxiv.org/pdf/1411.1623.pdf</a></p>
+
+<p>Siddharth Sigtia, Emmanouil Benetos, and Simon Dixon. 2016. “An end-to-end neural network for polyphonic piano music transcription.” <em>IEEE Transactions on Audio, Speech and Language Processing</em> 24, no. 5.
+<a href="http://ieeexplore.ieee.org/abstract/document/7416164/">http://ieeexplore.ieee.org/abstract/document/7416164/</a></p>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>This would not be true of other genres, jazz for example. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+</footer>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112084371-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112084371-1');
+</script>
+
+</body>
+</html>

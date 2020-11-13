@@ -1,0 +1,20 @@
+<header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <div style="width:100%">
+      <a href="{{ site.baseurl }}/"><img src="{{site.baseurl}}/images/ifds.png" style="width:30%;float:left;"></a>
+      <a href="https://nsf-tripods.org/"><img src="{{site.baseurl}}/images/NSF.gif" style="width:15%;margin-left:12.5%;float:left;"></a>
+      <a href="http://escience.washington.edu/"><img src="{{site.baseurl}}/images/eScience.png" style="width:30%;float:right;"></a>
+        <div style="clear: both;"></div>
+      </div>
+      
+      <nav class="site-nav">
+        {% include navigation.html %}
+      </nav>
+      <div class="clearfix"></div>
+      {% if site.show_social_icons %}
+        {% include social_links.html %}
+      {% endif %}
+    </div>
+  </div>
+</header>

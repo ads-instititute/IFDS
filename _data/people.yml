@@ -1,0 +1,260 @@
+# Team names, titles and social links
+- group_name: Faculty
+  members:
+    - first_name: Dmitriy
+      last_name: Drusvyatskiy
+      pic: Dmitriy.jpg
+      interest: Nonsmooth Optimization, Variational Analysis
+      url: http://sites.math.washington.edu/~ddrusv/
+      
+    - first_name: Maryam
+      last_name: Fazel
+      pic: Maryam.jpg
+      interest: Convex optimization, Algorithms, Machine Learning, and Control
+      url: https://faculty.washington.edu/mfazel/
+      
+    - first_name: Zaid
+      last_name: Harchaoui
+      pic: Zaid.jpg
+      interest: Safe Statistical Machine Learning, Representations For Signals and Images
+      url: http://faculty.washington.edu/zaid/
+
+    - first_name: Kevin
+      last_name: Jamieson
+      pic: Kevin.png
+      interest: Optimization, Experimental Design, Machine Learning
+      url: https://homes.cs.washington.edu/~jamieson
+
+    - first_name: Abel
+      last_name: Rodriguez
+      pic: Abel.jpg
+      interest:  Bayesian Statistics, Machine Learning
+      url: https://stat.uw.edu/about-us/people/abel-rodriguez
+      
+    # - first_name: Sham
+    #   last_name: Kakade
+    #   pic: Sham.jpg
+    #   interest: Theoretical and Applied Questions in Machine Learning and Artificial Intelligence
+    #   url: https://homes.cs.washington.edu/~sham/
+
+    - first_name: Yin Tat
+      last_name: Lee
+      pic: YinTat.jpg
+      interest: Convex Optimization, Convex Geometry, Spectral Graph Theory, Online Algorithms
+      url: http://yintat.com
+
+- group_name: Affiliates
+  members:
+    - first_name: Thomas
+      last_name: Rothvoss
+      pic: ThomasRothvoss.jpg
+      interest: Discrete Optimization
+      url: https://sites.math.washington.edu/~rothvoss/
+      
+    - first_name: James
+      last_name: Lee
+      pic: JamesLee.jpg
+      interest: Algorithms, Metric Embeddings, Spectral Graph Theory, Convex Optimization
+      url: https://homes.cs.washington.edu/~jrl/
+  
+    - first_name: Sébastien
+      last_name: Bubeck
+      pic: Sebastien.jpg
+      interest: Machine Learning, Convex Optimization, Multi-armed Bandits
+      url: http://sbubeck.com/
+      
+    - first_name: Zeyuan
+      last_name: Allen-Zhu
+      pic: Zeyuan.jpg
+      interest: Machine Learning, Optimization, Algorithms
+      url: http://people.csail.mit.edu/zeyuan/
+      
+    - first_name: Lin
+      last_name: Xiao
+      pic: LinXiao.jpg
+      interest: Large-scale Optimization, Parallel and Distributed Computing.
+      url: https://www.microsoft.com/en-us/research/people/lixiao/
+      
+    - first_name: Ofer
+      last_name: Dekel
+      pic: OferDekel.jpg
+      interest: Machine Learning, Online Prediction, Algorithm Engineering
+      url: https://www.microsoft.com/en-us/research/people/oferd/
+      
+    - first_name: Michael P.
+      last_name: Friedlander
+      pic: MichaelFriedlander.jpg
+      interest: Optimization
+      url: https://www.cs.ubc.ca/~mpf/index.html
+      
+    - first_name: Mark
+      last_name: Schmidt
+      pic: MarkSchmidt.jpg
+      interest: Machine Learning, Convex Optimization, Graphical Models
+      url: https://www.cs.ubc.ca/~schmidtm/
+  
+    - first_name: Magdalena
+      last_name: Balazinska
+      pic: MagdaBalazinska.jpg
+      interest: Data Management for Data Science, Big Data Systems, Cloud Computing
+      url: https://www.cs.washington.edu/people/faculty/magda 
+
+    - first_name: Sasha
+      last_name: Aravkin
+      pic: SashaAravkin.jpg
+      interest: Convex and Variational Analysis, Machine Learning, Robust Statistics, Nonconvex Optimization
+      url: https://sites.google.com/site/saravkin/
+      
+    - first_name: Jeff
+      last_name: Bilmes
+      pic: JeffBilmes.jpg
+      interest: Submodular Optimization, Graphical Models
+      url: http://melodi.ee.washington.edu/~bilmes
+      
+    - first_name: Pedro
+      last_name: Domingos
+      pic: PedroDomingos.jpg
+      interest: Machine Learning, Data Mining
+      url: https://homes.cs.washington.edu/~pedrod/
+      
+    - first_name: Mathias
+      last_name: Drton
+      pic: MathiasDrton.jpg
+      interest: Graphical Models, Algebraic Statistics, Model Selection
+      url: http://www.stat.washington.edu/~md5/ 
+      
+    - first_name: Emily
+      last_name: Fox
+      pic: EmilyFox.jpg
+      interest: Large-scale Bayesian Dynamic Modeling and Computations
+      url: https://homes.cs.washington.edu/~ebfox/
+ 
+    - first_name: Kevin
+      last_name: Jamieson
+      pic: KevinJamieson.jpg
+      interest: Active Learning
+      url: https://homes.cs.washington.edu/~jamieson
+ 
+    - first_name: Sreeram
+      last_name: Kannan
+      pic: SreeramKannan.jpg
+      interest: Information Theory
+      url: http://infotheory.ee.washington.edu
+ 
+    - first_name: Marina
+      last_name: Meila
+      pic: MarinaMeila.jpg
+      interest: Machine Learning, Clustering, Geometric Data Analysis, Networks, Preference Modeling
+      url: https://www.stat.washington.edu/mmp
+      
+    - first_name: Abraham
+      last_name: Flaxman
+      pic: AbrahamFlaxman.jpg
+      interest: Global Health, Health Metrics, Bayesian Computation, Machine Learning. 
+      url: http://www.math.cmu.edu/~adf/
+      
+    - first_name: Ali
+      last_name: Shojaie
+      pic: AliShojaie.jpg
+      interest: Statistical Network Analysis, Statistical Machine Learning for Complex Systems. 
+      url: http://faculty.washington.edu/ashojaie/
+      
+    - first_name: Tom
+      last_name: Trogdon
+      pic: TomTrogdon.jpg
+      interest: Random Matrix Theory, Nmerical Analysis and Spectral Methods
+      url: https://www.math.uci.edu/~ttrogdon/
+    
+      
+- group_name: Postdocs
+  members:
+    - first_name: Ramya
+      last_name: Vinayak
+      pic: RamyaKorlakaiVinayak.jpg
+      interest: Clustering, Crowdsourcing, Convex Optimization, Machine Learning.
+      url: http://www.its.caltech.edu/~rkorlaka/
+      
+    - first_name: Vincent
+      last_name: Roulet
+      pic: VincentRoulet.jpg
+      interest: Dynamic optimization problems for data science.
+      url: http://faculty.washington.edu/vroulet/
+      
+- group_name: Graduate Students
+  members:
+    - first_name: Kellie
+      last_name: MacPhee
+      pic: KellieMacPhee.jpg
+      interest: Optimization
+      url: http://sites.math.washington.edu/~kmacphee/
+      
+    - first_name: Corinne
+      last_name: Jones
+      pic: CorinneJones.jpg
+      interest: Unsupervised Learning for Signals and Images
+      url: http://www.stat.washington.edu/~cjones6/
+      
+    - first_name: Alec
+      last_name: Greaves-Tunnell
+      pic: AlecGreavestunnell.jpg
+      interest: Optimization
+      url: http://www.stat.washington.edu/~alecgt/
+      
+    - first_name: John
+      last_name: Thickstun
+      pic: JohnThickstun.jpg
+      interest: Representation learning, Time Series Models, Structured Prediction, Applications to Music.
+      url: https://homes.cs.washington.edu/~thickstn/
+      
+    - first_name: Swati
+      last_name: Padmanabhan
+      pic: SwatiPadmanabhan.jpg
+      interest: Convex Optimization.
+      url: https://www.linkedin.com/in/swatipadmanabhan
+    
+    - first_name: Krishna
+      last_name: Pillutla
+      pic: pillutla.jpg
+      interest: Machine Learning, Optimization
+      url: https://homes.cs.washington.edu/~pillutla/
+    
+    - first_name: Yue
+      last_name: Sun
+      pic: yue_photo_test.jpeg
+      interest: Statistical Machine Learning, Non-convex Optimization
+      url: http://students.washington.edu/yuesun/
+      
+    - first_name: Omid
+      last_name: Sadeghi
+      pic: OmidSadeghi2.jpg
+      interest: Optimization, Online Learning
+      url: http://students.washington.edu/omids/
+
+    - first_name: Haotian
+      last_name: Jiang
+      pic: HaotianJiang.jpg
+      interest: Optimization, Algorithms, Convex geometry
+      url: https://jhtdavid96.wixsite.com/jianghaotian
+
+    - first_name: Ruoqi
+      last_name: Shen
+      pic: RuoqiShen.jpg
+      interest: Algorithms, Optimization
+      url: 
+      
+    - first_name: Mitas
+      last_name: Ray
+      pic: Mitas.jpg
+      interest: Online optimization, Game theory
+      url:
+
+- group_name: Undergraduate Students
+  members:
+    - first_name: Guanghao
+      last_name: Ye
+      pic: Guanghao.jpg
+      interest: Convex Optimization
+      url: https://yeguanghao.xyz/
+      
+- group_name: Alumni
+  members:

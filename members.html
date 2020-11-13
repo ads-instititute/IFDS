@@ -1,0 +1,26 @@
+---
+layout: page
+title: Members
+permalink: /members.html
+---
+
+<div class="flex flex-wrap">
+    <div class="col-12 center">
+        <h2>Members of IFDS</h2>
+    </div>
+    {% for group in site.data.people %}
+    {% if group.members.size > 0 %}
+		<div class="col-12 center">
+			<h3>{{ group.group_name }}</h3>
+		</div>
+        {% assign members = group.members | sort: 'last_name' %}
+        {% for member in members %}
+            <div class="col-4 center">
+                <img src="members/{{ member.pic }}" alt="{{ member.first_name }}" style="width: 80%;height: auto;"><br>
+                <a href="{{ member.url }}">{{ member.first_name }} {{ member.last_name }}</a><br>
+		<small>{{ member.interest }}</small><br><br>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endfor %}
+</div>
