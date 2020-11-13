@@ -22,7 +22,7 @@ To address critical issues at the cutting edge of data science research, IFDS wi
 * [Abel Rodriguez](https://stat.uw.edu/about-us/people/abel-rodriguez)
 
 ### About the Institute:
-IFDS was founded through a major grant from the NSF TRIPODS (Transdisciplinary Research in Principles of Data Science) program. TRIPODS implements the NSF's vision of *Harnessing the Data Revolution,* one of its ["10 Big Ideas"](https://www.nsf.gov/about/congress/reports/nsf_big_ideas.pdf) for future investment. Beyond its role as a platform for the research detailed in the UW team's [grant proposal](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1740551), IFDS helps train graduate students and postdoctoral scholars and organize workshops and hackathons.
+IFDS was founded through a major grant from the NSF TRIPODS (Transdisciplinary Research in Principles of Data Science) program. TRIPODS implements the NSF's vision of *Harnessing the Data Revolution,* one of its ["10 Big Ideas"](https://www.nsf.gov/about/congress/reports/nsf_big_ideas.pdf) for future investment. Beyond its role as a platform for the research detailed in the UW team's [grant proposal](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2023166), IFDS helps train graduate students and postdoctoral scholars and organize workshops and hackathons.
 
 
 <center><img src="images/NSF.gif" style="width:30%;"></center>
