@@ -25,7 +25,11 @@
       interest: Optimization, Experimental Design, Machine Learning
       url: https://homes.cs.washington.edu/~jamieson
 
- 
+     - first_name: Abel
+      last_name: Rodriguez
+      pic: Abel.jpg
+      interest:  Bayesian Statistics, Machine Learning
+      url: https://stat.uw.edu/about-us/people/abel-rodriguez
       
     - first_name: Sham
       last_name: Kakade
@@ -47,11 +51,7 @@
       interest: Discrete Optimization
       url: https://sites.math.washington.edu/~rothvoss/
 
-    - first_name: Abel
-      last_name: Rodriguez
-      pic: Abel.jpg
-      interest:  Bayesian Statistics, Machine Learning
-      url: https://stat.uw.edu/about-us/people/abel-rodriguez
+
       
     - first_name: James
       last_name: Lee
