@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Seminars
-permalink: seminars.html
+permalink: IFDS/seminars.html
 ---
 
 ## [IFDS Working Group](mlopt.html)

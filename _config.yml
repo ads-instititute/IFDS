@@ -12,9 +12,8 @@ header_pages:
  - news.html
  - publications.html
  - seminars.md
- - courses.md
  - members.html
- - blog.html
+#  - blog.html
  
 # Google services
 google_verification:
