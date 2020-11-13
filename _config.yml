@@ -4,7 +4,7 @@ email:       sham@cs.washington.edu
 author:      Sham Kakade
 description: ""
 baseurl:     ""
-url:         "http://ads-institute.uw.edu"
+url:         "http://ads-institute.uw.edu/IFDS"
 date_format: "%b %-d, %Y"
 header_pages:
  - index.html
