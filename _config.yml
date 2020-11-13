@@ -10,7 +10,7 @@ header_pages:
  - index.html
  - about.md
  - news.html
- - publications.html
+#  - publications.html
  - seminars.md
  - members.html
 #  - blog.html

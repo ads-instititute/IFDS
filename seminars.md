@@ -4,17 +4,10 @@ title: Seminars
 permalink: IFDS/seminars.html
 ---
 
-## [IFDS Working Group](mlopt.html)
-Every Fri 1:30PM <br>
-Focusing on machine learning and mathematical optimization.
+## IFDS Monthly Meeting
+First Fri of each month 1:30PM <br>
+All IFDS members are invited. We start each meeting with IFDS announcements, followed by a research talk.
 
-## [Trends in Optimization Seminar](http://blogs.uw.edu/tops/)
-Every Tue 4:00PM <br>
-Focusing on the broad range of optimization research happening at UW.
-
-## [CSE Theory Seminar](http://theory.cs.washington.edu/)
-Every Tue 1:30PM and every Fri 12:00PM<br>
-Focusing on recent results in theoretical computer science.
-
-## [UW CORE Seminar](http://blogs.uw.edu/tops/core-seminar/)
-An interdepartmental talks series focused on optimization, machine learning, big data, statistics and numerics.
+## RIO-Learning
+Every Tue 4:30PM<br>
+RIO-Learning: Reinforcement, Interactive, and Online Learning group. Restricted to IFDS members (at all IFDS sites).

@@ -25,17 +25,13 @@
       interest: Optimization, Experimental Design, Machine Learning
       url: https://homes.cs.washington.edu/~jamieson
 
-    - first_name: Abel
-      last_name: Rodriguez
-      pic: Abel.jpg
-      interest:  Bayesian Statistics, Machine Learning
-      url: https://stat.uw.edu/about-us/people/abel-rodriguez
+ 
       
-    # - first_name: Sham
-    #   last_name: Kakade
-    #   pic: Sham.jpg
-    #   interest: Theoretical and Applied Questions in Machine Learning and Artificial Intelligence
-    #   url: https://homes.cs.washington.edu/~sham/
+    - first_name: Sham
+      last_name: Kakade
+      pic: Sham.jpg
+      interest: Theoretical and Applied Questions in Machine Learning and Artificial Intelligence
+      url: https://homes.cs.washington.edu/~sham/
 
     - first_name: Yin Tat
       last_name: Lee
@@ -50,6 +46,12 @@
       pic: ThomasRothvoss.jpg
       interest: Discrete Optimization
       url: https://sites.math.washington.edu/~rothvoss/
+
+    - first_name: Abel
+      last_name: Rodriguez
+      pic: Abel.jpg
+      interest:  Bayesian Statistics, Machine Learning
+      url: https://stat.uw.edu/about-us/people/abel-rodriguez
       
     - first_name: James
       last_name: Lee
@@ -128,12 +130,6 @@
       pic: EmilyFox.jpg
       interest: Large-scale Bayesian Dynamic Modeling and Computations
       url: https://homes.cs.washington.edu/~ebfox/
- 
-    - first_name: Kevin
-      last_name: Jamieson
-      pic: KevinJamieson.jpg
-      interest: Active Learning
-      url: https://homes.cs.washington.edu/~jamieson
  
     - first_name: Sreeram
       last_name: Kannan
