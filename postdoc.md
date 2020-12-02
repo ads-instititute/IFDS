@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Job Listing
+title: Job openings
 pagetitle: IFDS Postdoctoral Fellow Positions Now Available
 permalink: postdoc.html
 tags: job
