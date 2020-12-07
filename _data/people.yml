@@ -126,6 +126,19 @@
       pic: Mitas.jpg
       interest: Online optimization, Game theory
       url:
+      
+    - first_name: Adhyyan
+      last_name: Narang
+      pic: AdhyyanNarang.jpg
+      interest: Optimization, Game theory
+      url: http://adhyyannarang.com/
+      
+    - first_name: Zhihan
+      last_name: Xiong
+      pic: ZhihanXiong.jpg
+      interest: Online learning, Optimization
+      url: https://www.linkedin.com/in/zhihan-xiong/
+      
 
 - group_name: Undergraduate Students
   members:
